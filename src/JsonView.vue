@@ -1,31 +1,32 @@
 <template>
     <div class="block_content">
-        <span v-for="(item, index) in flowData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] == true}]">
+        <span v-for="(item, index) in flowData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
             <span class="json-key">
-                <input type="text" v-model="item.name" class="key-input" v-if="typeof item.name == 'string'" @blur="keyInputBlur(item, $event)">
-                <i class="collapse-down" v-if="item.type == 'object' || item.type == 'array'" @click="closeBlock(index, $event)">
+                <span :contenteditable="isEdit" @blur="editItem"
+                <input type="text" v-model="item.name" class="key-input" v-if="typeof item.name === Types.STRING" @blur="keyInputBlur(item, $event)">
+                <i class="collapse-down" v-if="item.type === Types.OBJECT || item.type === Types.ARRAY" @click="closeBlock(index, $event)">
                     <i class="icon-down-open"></i>
                 </i>
-                <i class="del-btn" @click="delItem(parsedData, item, index)">
+                <i v-if="isEdit" class="del-btn" @click="delItem(parsedData, item, index)">
                     <i class="icon-trash"></i>
                 </i>
-                <i v-if="item.type == 'object'" class="i-type">{{'{' + item.childParams.length + '}'}}</i>
-                <i v-if="item.type == 'array'" class="i-type">{{'[' + item.childParams.length + ']'}}</i>
+                <i v-if="item.type === Types.OBJECT" class="i-type">{{'{' + item.childParams.length + '}'}}</i>
+                <i v-if="item.type === Types.ARRAY" class="i-type">{{'[' + item.childParams.length + ']'}}</i>
             </span>
             <span class="json-val">
-                <template v-if="item.type == 'object'">
-                    <json-view :parsedData="item.childParams" v-model="item.childParams" ></json-view>
+                <template v-if="item.type === Types.OBJECT">
+                    <json-view :isEdit="isEdit" :parsedData="item.childParams" v-model="item.childParams" ></json-view>
                 </template>
 
-                <template v-else-if="item.type == 'array'">
-                    <array-view :parsedData="item.childParams" v-model="item.childParams" ></array-view>
+                <template v-else-if="item.type === Types.ARRAY">
+                    <array-view :isEdit="isEdit" :parsedData="item.childParams" v-model="item.childParams" ></array-view>
                 </template>
 
                 <template v-else>
-                    <span class="val">    
-                        <input type="text" v-model="item.remark" class="val-input" v-if="item.type == 'string'">
-                        <input type="number" v-model.number="item.remark" class="val-input" v-if="item.type == 'number'">
-                        <select name="value" v-model="item.remark" class="val-input" v-if="item.type == 'boolean'">
+                    <span class="val">
+                        <input type="text" v-model="item.remark" class="val-input" v-if="item.type === Types.STRING">
+                        <input type="number" v-model.number="item.remark" class="val-input" v-if="item.type === Types.NUMBER">
+                        <select name="value" v-model="item.remark" class="val-input" v-if="item.type === Types.BOOLEAN">
                             <option :value="true">true</option>
                             <option :value="false">false</option>
                         </select>
@@ -36,7 +37,7 @@
 
         <item-add-form v-if="toAddItem" @confirm="newItem" @cancel="cancelNewItem"></item-add-form>
 
-        <div class="block add-key" @click="addItem" v-if="!toAddItem">
+        <div v-if="isEdit" class="block add-key" @click="addItem" v-if="!toAddItem">
             <i class="icon-plus"></i>
         </div>
     </div>
@@ -45,9 +46,16 @@
 <script>
 import ItemAddForm from './ItemAddForm.vue'
 
+const Types = {
+    STRING: 'string',
+    NUMBER: 'number',
+    BOOLEAN: 'boolean',
+    ARRAY: 'array',
+    OBJECT: 'object',
+}
 export default {
     name: 'JsonView',
-    props: {'parsedData': {}},
+    props: {'parsedData': {}, isEdit: true},
     data: function () {
         return {
             'flowData': [],
@@ -71,7 +79,7 @@ export default {
         },
 
         'closeBlock': function (index, e) {
-            this.$set(this.hideMyBlock, index, this.hideMyBlock[index]?false:true)
+            this.$set(this.hideMyBlock, index, !this.hideMyBlock[index])
         },
 
         'addItem': function () {
@@ -88,7 +96,7 @@ export default {
                 'name': obj.key,
                 'type': obj.type
             }
-            if(obj.type == 'array' || obj.type == 'object') {
+            if(obj.type === Types.ARRAY || obj.type === Types.OBJECT) {
                 oj.childParams = obj.val
                 oj.remark = null
             } else {
@@ -116,6 +124,12 @@ export default {
             }
             console.debug(item)
             console.debug(e)
+        }
+
+        editItem(ev) {
+            if (this.props.isEdit) {
+                this.item.name = ev.target.textContent
+            }
         }
     }
 }

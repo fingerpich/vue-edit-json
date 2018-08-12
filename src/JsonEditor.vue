@@ -1,12 +1,12 @@
 <template>
-    <json-view :parsedData="parsedData" v-model="parsedData"></json-view>
+    <json-view :isEdit="isEdit" :parsedData="parsedData" v-model="parsedData"></json-view>
 </template>
 
 
 <script>
 export default {
     name: 'JsonEditor',
-    props: { 'objData': { required: true } },
+    props: { 'objData': { required: true } , isEdit: true},
     data: function() {
         return {
             'parsedData': [],
