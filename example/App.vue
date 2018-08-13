@@ -4,30 +4,24 @@
 		<div class="editor-w clearfix">
 			<div class="w-2">
 				<div class="editor">
-					<JsonEditor :objData="jsonData" v-model="jsonData" ></JsonEditor>
+					<JsonEditor :is-edit="false" :objData="jsonData" v-model="jsonData" ></JsonEditor>
 				</div>
 			</div>
 			<div class="w-2">
-				<div class="code-pre">
-					<div slot="content">
-						<pre>
-							<code class="json" id="res_code"></code>
-						</pre>
-					</div>
-				</div>
+				<JsonEditor :is-edit="true" :objData="jsonData" v-model="jsonData" ></JsonEditor>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import package from '../package.js'
+import pkgJson from '../package.json'
 
 export default {
 	name: 'app',
 	data: function() {
 		return {
-			jsonData: package
+			jsonData: pkgJson
 		}
 	},
 

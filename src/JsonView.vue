@@ -2,8 +2,7 @@
     <div class="block_content">
         <span v-for="(item, index) in flowData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
             <span class="json-key">
-                <span :contenteditable="isEdit" @blur="editItem"
-                <input type="text" v-model="item.name" class="key-input" v-if="typeof item.name === Types.STRING" @blur="keyInputBlur(item, $event)">
+                <editable-text :isEdit="isEdit" :value="item.name" @change="(e) => item.name = e.target.textContent"></editable-text>
                 <i class="collapse-down" v-if="item.type === Types.OBJECT || item.type === Types.ARRAY" @click="closeBlock(index, $event)">
                     <i class="icon-down-open"></i>
                 </i>
@@ -23,21 +22,14 @@
                 </template>
 
                 <template v-else>
-                    <span class="val">
-                        <input type="text" v-model="item.remark" class="val-input" v-if="item.type === Types.STRING">
-                        <input type="number" v-model.number="item.remark" class="val-input" v-if="item.type === Types.NUMBER">
-                        <select name="value" v-model="item.remark" class="val-input" v-if="item.type === Types.BOOLEAN">
-                            <option :value="true">true</option>
-                            <option :value="false">false</option>
-                        </select>
-                    </span>
+                    <edit-value :item="item"></edit-value>
                 </template>
             </span>
         </span>
 
         <item-add-form v-if="toAddItem" @confirm="newItem" @cancel="cancelNewItem"></item-add-form>
 
-        <div v-if="isEdit" class="block add-key" @click="addItem" v-if="!toAddItem">
+        <div v-if="!toAddItem && isEdit" class="block add-key" @click="addItem">
             <i class="icon-plus"></i>
         </div>
     </div>
@@ -45,6 +37,8 @@
 
 <script>
 import ItemAddForm from './ItemAddForm.vue'
+import EditableText from "./EditableText.vue";
+import EditValue from "./EditValue.vue";
 
 const Types = {
     STRING: 'string',
@@ -60,6 +54,7 @@ export default {
         return {
             'flowData': [],
             'toAddItem': false,
+            Types: Types,
             'hideMyBlock': {}
         }
     },
@@ -69,6 +64,8 @@ export default {
     },
 
     components: {
+        EditValue,
+        EditableText,
         'item-add-form': ItemAddForm
     },
     methods: {
@@ -124,9 +121,9 @@ export default {
             }
             console.debug(item)
             console.debug(e)
-        }
+        },
 
-        editItem(ev) {
+        editKey: function (ev) {
             if (this.props.isEdit) {
                 this.item.name = ev.target.textContent
             }
