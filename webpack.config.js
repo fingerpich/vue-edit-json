@@ -20,7 +20,7 @@ config.plugins = (config.plugins || []).concat([
     },
   }),
   new webpack.optimize.UglifyJsPlugin({
-    sourceMap: false,
+    sourceMap: true,
     compress: {
       warnings: false,
     },

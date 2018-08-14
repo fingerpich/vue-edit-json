@@ -2,7 +2,7 @@
     <div class="block_content">
         <span v-for="(item, index) in flowData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
             <span class="json-key">
-                <editable-text :isEdit="isEdit" :value="item.name" @change="(e) => item.name = e.target.textContent"></editable-text>
+                <editable-text :isEdit="isEdit" :value="item.name" @change="(e) => changeText(item, e)"></editable-text>
                 <i class="collapse-down" v-if="item.type === Types.OBJECT || item.type === Types.ARRAY" @click="closeBlock(index, $event)">
                     <i class="icon-down-open"></i>
                 </i>
@@ -14,15 +14,15 @@
             </span>
             <span class="json-val">
                 <template v-if="item.type === Types.OBJECT">
-                    <json-view :isEdit="isEdit" :parsedData="item.childParams" v-model="item.childParams" ></json-view>
+                    <json-view :isEdit="isEdit" :parsedData="item.childParams" v-model="item.childParams" @change="onChange"></json-view>
                 </template>
 
                 <template v-else-if="item.type === Types.ARRAY">
-                    <array-view :isEdit="isEdit" :parsedData="item.childParams" v-model="item.childParams" ></array-view>
+                    <array-view :isEdit="isEdit" :parsedData="item.childParams" v-model="item.childParams" @change="onChange"></array-view>
                 </template>
 
                 <template v-else>
-                    <edit-value :item="item"></edit-value>
+                    <edit-value :isEdit="isEdit" :item="item" @change="onChange"></edit-value>
                 </template>
             </span>
         </span>
@@ -60,6 +60,7 @@ export default {
     },
 
     created: function () {
+        console.log('PARSED : ', this.parsedData);
         this.flowData = this.parsedData
     },
 
@@ -123,11 +124,14 @@ export default {
             console.debug(e)
         },
 
-        editKey: function (ev) {
-            if (this.props.isEdit) {
-                this.item.name = ev.target.textContent
-            }
+        onChange: function() {
+            this.$emit('change');
+        },
+        changeText: function(item, e) {
+            item.name = e.target.textContent;
+            this.onChange();
         }
+
     }
 }
 

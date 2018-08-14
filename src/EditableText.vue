@@ -21,6 +21,7 @@ export default {
         },
         editItem: function (ev) {
             if (this.isEdit) {
+                console.log(ev.target.textContent)
                 this.$emit('change', ev.target.textContent)
             }
         }
