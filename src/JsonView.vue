@@ -126,6 +126,7 @@ export default {
 
         onChange: function() {
             this.$emit('change');
+            this.$emit('input', this.flowData)
         },
         changeText: function(item, e) {
             item.name = e.target.textContent;

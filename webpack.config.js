@@ -3,6 +3,7 @@ const config = require('./webpack.base.config');
 const path = require('path');
 
 config.entry = './src/index.js';
+config.mode = 'production';
 config.output = {
   path: path.resolve('dist'),
   filename: 'Vue-edit-json.js',
@@ -18,13 +19,7 @@ config.plugins = (config.plugins || []).concat([
     'process.env': {
       NODE_ENV: JSON.stringify('production'),
     },
-  }),
-  new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true,
-    compress: {
-      warnings: false,
-    },
-    comments: false,
-  }),
+  })
 ]);
+
 module.exports = config;

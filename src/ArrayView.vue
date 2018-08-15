@@ -3,7 +3,7 @@
         <ol class="array-ol">
             <li v-for="(member, index) in flowData" :key="index" :class="['array-item', {'hide-item': hideMyItem[index] == true}]">
                 <p v-if="member.type !== 'object' && member.type !== Types.ARRAY">
-                    <edit-value :item="parsedData[index]"></edit-value>
+                    <edit-value @change="change" :item="parsedData[index]"></edit-value>
                 </p>
                 <div v-else>
                     <span :class="['json-key', 'json-desc']">{{parsedData[index].type.toUpperCase()}}
@@ -16,11 +16,11 @@
 
                     <span class="json-val">         
                         <template v-if="member.type === Types.ARRAY">
-                            <array-view :isEdit="isEdit" :parsedData="parsedData[index].childParams" v-model="parsedData[index].childParams"></array-view>
+                            <array-view @change="change" :isEdit="isEdit" :parsedData="parsedData[index].childParams" v-model="parsedData[index].childParams"></array-view>
                         </template>
 
                         <template v-if="member.type === Types.OBJECT">
-                            <json-view :is-edit="isEdit" :parsedData="parsedData[index].childParams" v-model="parsedData[index].childParams"></json-view>
+                            <json-view @change="change" :is-edit="isEdit" :parsedData="parsedData[index].childParams" v-model="parsedData[index].childParams"></json-view>
                         </template>
                         
                     </span>        
@@ -101,9 +101,12 @@ export default {
                 oj.remark = obj.val
             }
 
-            this.flowData.push(oj)
-            this.$emit('input', this.flowData)
+            this.flowData.push(oj);
+            this.change();
             this.cancelNewItem()
+        },
+        change: function() {
+            this.$emit('change', this.flowData)
         },
         onEdit: function(e) {
 

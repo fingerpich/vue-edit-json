@@ -1,6 +1,6 @@
 <template>
     <span class="val">
-        <select name="value" v-model="item.remark" class="val-input" v-if="item.type === 'boolean'">
+        <select name="value" v-model="item.remark" class="val-input" v-if="item.type === 'boolean'" @change="change">
             <option :value="true">true</option>
             <option :value="false">false</option>
         </select>
