@@ -4,11 +4,11 @@
 		<div class="editor-w clearfix">
 			<div class="w-2">
 				<div class="editor">
-					<JsonEditor :is-edit="false" :objData="jsonData" v-model="jsonData" ></JsonEditor>
+					<JsonEditor :is-edit="false" v-model="jsonData"></JsonEditor>
 				</div>
 			</div>
 			<div class="w-2">
-				<JsonEditor :is-edit="true" :objData="jsonData" v-model="jsonData" ></JsonEditor>
+				<JsonEditor :is-edit="true" v-model="jsonData"></JsonEditor>
 			</div>
 		</div>
 	</div>

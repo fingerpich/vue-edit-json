@@ -11,19 +11,17 @@ export default {
     props: { value: Object , isEdit: true},
     data: function() {
         return {
-            'parsedData': [],
+            parsedData: [],
         }
     },
     created: function() {
-        const parsed = this.jsonParse(this.value);
-        this.parsedData = parsed;
+        this.parsedData = this.jsonParse(this.value);
     },
     watch: {
         value: {
             handler(newValue, oldValue) {
                 if (newValue!==oldValue) {
-                    const parsed = this.jsonParse(newValue);
-                    this.parsedData = parsed;
+                    this.parsedData = this.jsonParse(newValue);
                 }
 　　　　　　  },
 　　　　    deep: true
@@ -58,7 +56,7 @@ export default {
                         'type': this.getType(val)
                     }
 
-                    if(opt.type == 'array' || opt.type === 'object') {
+                    if(opt.type === 'array' || opt.type === 'object') {
                         opt.childParams = parsedVal
                         opt.remark = null
                     } else {

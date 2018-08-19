@@ -17,11 +17,6 @@ config.plugins = (config.plugins || []).concat([
         template: './example/index.html',
         inject: true,
     }),
-    new webpack.DefinePlugin({
-        'process.env': {
-            NODE_ENV: JSON.stringify('production'),
-        },
-    })
 ]);
 
 module.exports = config;

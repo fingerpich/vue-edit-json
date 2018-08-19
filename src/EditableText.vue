@@ -1,6 +1,5 @@
 <template>
-    <span :contenteditable="isEdit" @keydown="keydown" @blur="editItem">{{value}}>
-    </span>
+    <span :contenteditable="isEdit" @keydown="keydown" @blur="editItem">{{value}}</span>
 </template>
 
 <script>
@@ -11,6 +10,9 @@ export default {
     data: function () {
         return {
         }
+    },
+    created() {
+      console.log(this.value);
     },
     methods: {
         keydown: function (e) {

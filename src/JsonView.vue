@@ -1,8 +1,8 @@
 <template>
     <div class="block_content">
-        <span v-for="(item, index) in flowData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
+        <span v-for="(item, index) in parsedData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
             <span class="json-key">
-                <editable-text :isEdit="isEdit" :value="item.name" @change="(e) => changeText(item, e)"></editable-text>
+                <editable-text :isEdit="isEdit" :value="item.name" @change="(nc)=> changeText(item, nc)"></editable-text>
                 <i class="collapse-down" v-if="item.type === Types.OBJECT || item.type === Types.ARRAY" @click="closeBlock(index, $event)">
                     <i class="icon-down-open"></i>
                 </i>
@@ -39,6 +39,7 @@
 import ItemAddForm from './ItemAddForm.vue'
 import EditableText from "./EditableText.vue";
 import EditValue from "./EditValue.vue";
+import ArrayView from "./ArrayView.vue";
 
 const Types = {
     STRING: 'string',
@@ -49,10 +50,9 @@ const Types = {
 }
 export default {
     name: 'JsonView',
-    props: {'parsedData': {}, isEdit: true},
+    props: {parsedData: {}, isEdit: true},
     data: function () {
         return {
-            'flowData': [],
             'toAddItem': false,
             Types: Types,
             'hideMyBlock': {}
@@ -61,34 +61,34 @@ export default {
 
     created: function () {
         console.log('PARSED : ', this.parsedData);
-        this.flowData = this.parsedData
     },
 
     components: {
+        ArrayView,
         EditValue,
         EditableText,
         'item-add-form': ItemAddForm
     },
     methods: {
-        'delItem': function (parentDom, item, index) {
-            this.flowData = this.flowData.rmIndex(index)
+        delItem: function (parentDom, item, index) {
+            this.parsedData = this.parsedData.rmIndex(index)
             if(this.hideMyBlock[index]) this.hideMyBlock[index] = false
-            this.$emit('input', this.flowData)
+            this.$emit('input', this.parsedData)
         },
 
-        'closeBlock': function (index, e) {
+        closeBlock: function (index, e) {
             this.$set(this.hideMyBlock, index, !this.hideMyBlock[index])
         },
 
-        'addItem': function () {
+        addItem: function () {
             this.toAddItem = true
         },
 
-        'cancelNewItem': function () {
+        cancelNewItem: function () {
             this.toAddItem = false
         },
 
-        'newItem': function (obj) {
+        newItem: function (obj) {
     
             let oj = {
                 'name': obj.key,
@@ -107,13 +107,13 @@ export default {
                 return
             } else {
 
-                this.flowData.push(oj)
-                this.$emit('input', this.flowData)
+                this.parsedData.push(oj)
+                this.$emit('input', this.parsedData)
                 this.cancelNewItem()
             }
         },
 
-        'keyInputBlur': function (item, e) {
+        keyInputBlur: function (item, e) {
             if(item.name.length <= 0) {
                 alert('please must input a name!')
                 item.name = "null"
@@ -126,10 +126,10 @@ export default {
 
         onChange: function() {
             this.$emit('change');
-            this.$emit('input', this.flowData)
+            this.$emit('input', this.parsedData)
         },
-        changeText: function(item, e) {
-            item.name = e.target.textContent;
+        changeText: function(item, newContent) {
+            item.name = newContent;
             this.onChange();
         }
 

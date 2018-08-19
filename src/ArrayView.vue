@@ -41,8 +41,9 @@
 </template>
 
 <script>
-import ItemAddForm from './ItemAddForm.vue'
+import ItemAddForm from './ItemAddForm.vue';
 import EditValue from "./EditValue.vue";
+import JsonView from "./JsonView.vue";
 
 const Types = {
     STRING: 'string',
@@ -64,6 +65,7 @@ export default {
         }
     },
     components: {
+        JsonView,
         EditValue,
         'item-add-form': ItemAddForm
     },
