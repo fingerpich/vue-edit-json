@@ -1,45 +1,51 @@
 <template>
-    <json-view :isEdit="isEdit" :parsedData="parsedData" v-model="parsedData"></json-view>
+    <json-view :isEdit="isEdit" :parsedData="parsedData" @input="jsonChangedData"></json-view>
 </template>
 
 
 <script>
+import JsonView from "./JsonView.vue";
 export default {
     name: 'JsonEditor',
-    props: { 'objData': { required: true } , isEdit: true},
+    components: {JsonView},
+    props: { value: Object , isEdit: true},
     data: function() {
         return {
             'parsedData': [],
         }
     },
     created: function() {
-        this.parsedData = this.jsonParse(this.objData)
+        const parsed = this.jsonParse(this.value);
+        this.parsedData = parsed;
     },
     watch: {
-        'parsedData': {
+        value: {
             handler(newValue, oldValue) {
-                this.$emit('input', this.makeJson(this.parsedData))
+                if (newValue!==oldValue) {
+                    const parsed = this.jsonParse(newValue);
+                    this.parsedData = parsed;
+                }
 　　　　　　  },
 　　　　    deep: true
-　　　　}   
+　　　　}
     },
     methods: {
-        'jsonParse': function (jsonStr) {
-
-            //
+        jsonChangedData: function(data) {
+            console.log('jsonView has changed', data);
+            this.$emit('input', this.makeJson(data))
+        },
+        jsonParse: function (jsonStr) {
             let parseJson = (json) => {
                 let result = []
                 let keys = Object.keys(json)
                 keys.forEach((k, index) => {
                     let val = json[k]
                     let parsedVal = val
-                    if(this.getType(val) == 'object') {
-
-                        // console.debug('-- o --')
+                    if(this.getType(val) === 'object') {
                         parsedVal = parseJson(val)
                         // result.push(fr)
 
-                    } else if(this.getType(val) == 'array') {
+                    } else if(this.getType(val) === 'array') {
 
                         // console.debug('-- a --')
                         // console.debug(val)
@@ -52,7 +58,7 @@ export default {
                         'type': this.getType(val)
                     }
 
-                    if(opt.type == 'array' || opt.type == 'object') {
+                    if(opt.type == 'array' || opt.type === 'object') {
                         opt.childParams = parsedVal
                         opt.remark = null
                     } else {
@@ -71,10 +77,10 @@ export default {
                 for (let i = 0; i < arrayObj.length; ++i) {
                     let val = arrayObj[i]
                     let parsedVal = val
-                    if (this.getType(val) == 'object') {
+                    if (this.getType(val) === 'object') {
                         parsedVal = parseJson(val)
 
-                    } else if (this.getType(val) == 'array') {
+                    } else if (this.getType(val) === 'array') {
                         parsedVal = parseArray(val)
                     }
 
@@ -84,7 +90,7 @@ export default {
                         'type': this.getType(val)
                     }
 
-                    if(opt.type == 'array' || opt.type == 'object') {
+                    if(opt.type === 'array' || opt.type === 'object') {
                         opt.childParams = parsedVal
                         opt.remark = null
                     } else {
@@ -106,7 +112,7 @@ export default {
             return parseBody(jsonStr)
         },
 
-        'getType': function(obj) {
+        getType: function(obj) {
             switch (Object.prototype.toString.call(obj)) {
                 case '[object Array]': 
                     return 'array'
@@ -120,7 +126,7 @@ export default {
             } 
         },
 
-        'makeJson': function (dataArr) {
+        makeJson: function (dataArr) {
 
             let revertWithObj = function(data) {
                 let r = {}
