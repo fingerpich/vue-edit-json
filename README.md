@@ -28,27 +28,7 @@ Vue.use(JsonEditor)
 ```
 </br>
 
-## Example
-Single file component
+Pass json data using `v-model` or `:value` and make it editable using `is-edit` attribute as the following code
 ``` html
-
-<template>
-    <JsonEditor :objData="jsonData" v-model="jsonData" ></JsonEditor>
-</template>
-<script>
-export default {
-    ...
-    data: function() {
-        return {
-            jsonData: {
-                name: 'mike',
-                age: 22,
-                phone: '18552129932',
-                address: ['AAA C1', 'BBB C2']
-            }
-        }
-    }
-}
-</script> 
-
+<JsonEditor is-edit="true" v-model="jsonData" ></JsonEditor>
 ```

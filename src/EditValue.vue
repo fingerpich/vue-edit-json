@@ -14,14 +14,14 @@ import EditableText from "./EditableText.vue";
 export default {
     name: 'EditValue',
     components: {EditableText},
-    props: {item: {}, isEdit: false},
+    props: {item: {}, isEdit: false, type: String},
     data: function () {
         return {
         }
     },
     methods: {
         change:function() {
-            this.$emit('change')
+            this.$emit('change');
         }
     }
 }

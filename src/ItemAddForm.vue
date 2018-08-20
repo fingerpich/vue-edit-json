@@ -1,6 +1,6 @@
 <template>
   <div class="add-form pure-form">
-
+    <form @submit="confirm">
       <div class="f-input">
         <input type="text" v-model="keyName" class="f-input-m" placeholder="name" v-if="needName">
         <select v-model="formatSelected" class="f-input-m">
@@ -21,9 +21,10 @@
 
       <!-- -- -->
       <div class="f-btns">
-        <button class="pure-button f-confirm" @click="confirm">add</button>
-        <button class="pure-button" @click="cancel">cancel</button>
+        <button type="submit" class="pure-button f-confirm">add</button>
+        <button type="button" class="pure-button" @click="cancel">cancel</button>
       </div>
+    </form>
   </div>
 
 </template>
@@ -46,7 +47,8 @@ export default {
         }
     },
     methods: {
-        confirm: function() {
+        confirm: function(e) {
+            e.preventDefault();
             let val = null;
             if (
                 this.formatSelected === "array" ||
@@ -69,7 +71,8 @@ export default {
             this.formatSelected = "string";
         },
 
-        cancel: function() {
+        cancel: function(e) {
+            e.preventDefault();
             this.$emit("cancel");
         },
 
@@ -93,7 +96,7 @@ export default {
 
 .f-btns {
     display: inline-block;
-    margin-top: 0.5em;
+    margin: 0 10px;
 }
 
 .f-confirm {
@@ -103,7 +106,19 @@ export default {
 
 .add-form {
     margin-bottom: 20px;
-    font-size: .6em;
+    font-size: 0.9rem;
+    input, select, button{
+        font-size: 0.9rem;
+        height: 2rem;
+        box-sizing: content-box;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        padding: 0 7px;
+    }
+    input, select{
+        width: 70px;
+    }
 }
 
 </style>
