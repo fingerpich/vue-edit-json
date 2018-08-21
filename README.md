@@ -2,7 +2,7 @@
 
 > View and edit JSON as an vue component
 
-## **[DEMO](http://fingerpich.github.io/Vue-edit-json)**
+## **[DEMO](http://fingerpich.github.io/vue-edit-json)**
 
 </br>
 
