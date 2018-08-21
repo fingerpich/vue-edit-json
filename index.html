@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue edit json</title>
+    <style>
+      body {
+        font-size: 14px;
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: #2c3e50;
+      }
+      
+      .clearfix {
+        *zoom: 1;
+      }
+      
+      .clearfix:before,
+      .clearfix:after {
+        content: '';
+        display: table;
+      }
+      
+      .clearfix:after {
+        clear: both;
+      }
+
+      .t {
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 60px;
+      }
+      
+      .editor-w {
+        margin: 0 auto;
+        max-width: 1200px;
+        padding: 0 20px;
+      }
+
+      .w-2 {
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+      }
+      .editable {
+        border-left: 1px solid silver;
+      }
+
+      .editor {
+        padding: 20px 60px;
+      }
+
+      .title{
+        text-align: center;
+      }
+      .links{
+        text-align: center;
+        font-size: 14px;
+      }
+      .install{
+        text-align: center;
+      }
+      .example{
+        font-size: .7rem;
+        text-align: center;
+      }
+      .feature{
+        text-align: center;
+      }
+    
+      </style>
+  </head>
+  <body>
+    <h1 class="title">Vue edit json</h1>
+    <div class="links">
+      <a class="link" href="https://github.com/fingerpich/vue-edit-json">github</a>
+      <a class="link" href="https://www.npmjs.com/package/vue-edit-json">npm</a>
+    </div>
+    <div class="install">
+      <pre>npm install Vue-edit-json --save</pre>
+    </div>
+    <div class="examples editor-w clearfix">
+      <div class="w-2">
+        <h4 class="feature">View Json</h4>
+        <pre class="example">
+&lt;JsonEditor :is-edit=&quot;false&quot; v-model=&quot;jsonData&quot;&gt;&lt;/JsonEditor&gt;
+        </pre>
+      </div>
+      <div class="w-2 editable">
+        <h4 class="feature">Edit Json</h4>
+        <pre class="example">
+&lt;JsonEditor :is-edit=&quot;true&quot; v-model=&quot;jsonData&quot;&gt;&lt;/JsonEditor&gt;
+        </pre>
+      </div>
+    </div>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+ <script type="text/javascript" src="main_f1d3526be449816077c4.js"></script></body>
+</html>
