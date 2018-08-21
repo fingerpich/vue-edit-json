@@ -1,6 +1,6 @@
 <template>
     <div class="block_content">
-        <span v-for="(item, index) in parsedData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
+        <span v-for="(item, index) in parsedData" :key="index" class="block clearfix" v-show="!hideMyBlock[index]">
             <span class="json-key">
                 <editable-text :isEdit="isEdit" :value="item.name" @change="(nc)=> changeText(item, nc)"></editable-text>
                 <i class="collapse-down" v-if="item.type === Types.OBJECT || item.type === Types.ARRAY" @click="closeBlock(index, $event)">
@@ -89,38 +89,37 @@ export default {
         },
 
         newItem: function (obj) {
-    
             let oj = {
-                'name': obj.key,
-                'type': obj.type
-            }
-            if(obj.type === Types.ARRAY || obj.type === Types.OBJECT) {
-                oj.childParams = obj.val
-                oj.remark = null
+                name: obj.key,
+                type: obj.type
+            };
+            if (obj.type === Types.ARRAY || obj.type === Types.OBJECT) {
+                oj.childParams = obj.val;
+                oj.remark = null;
             } else {
-                oj.childParams = null
-                oj.remark = obj.val
+                oj.childParams = null;
+                oj.remark = obj.val;
             }
-
-            if(!oj.name) {
-                alert('please must input a name!')
+            if (!oj.name) {
+                alert('please must input a name!');
                 return
             } else {
 
-                this.parsedData.push(oj)
-                this.$emit('input', this.parsedData)
+                this.parsedData.push(oj);
+                this.$emit('input', this.parsedData);
+                this.$emit('change', this.parsedData);
                 this.cancelNewItem()
             }
         },
 
         keyInputBlur: function (item, e) {
             if(item.name.length <= 0) {
-                alert('please must input a name!')
-                item.name = "null"
+                alert('please must input a name!');
+                item.name = "null";
                 e.target.focus()
                 // return 1
             }
-            console.debug(item)
+            console.debug(item);
             console.debug(e)
         },
 

@@ -58,9 +58,9 @@ export default {
     props: {parsedData: {}, isEdit: true},
     data: function() {
         return {
-            'toAddItem': false,
+            toAddItem: false,
             Types: Types,
-            'hideMyItem': {}
+            hideMyItem: {}
         }
     },
     components: {

@@ -87,27 +87,21 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
+    .f-input, .f-btns {
+        display: inline-block;
+    }
 
-.f-input,
-.f-btns {
-    display: inline-block;
-}
+    .f-btns {
+        display: inline-block;
+        margin: 0 0 0 3px;
+    }
 
-.f-btns {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.f-confirm {
-    color: #fff;
-    background: #05a5d1;
-}
-
-.add-form {
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    input, select, button{
+    .add-form {
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+    }
+    .add-form input, .add-form select, .add-form button{
         font-size: 0.9rem;
         height: 2rem;
         box-sizing: content-box;
@@ -116,9 +110,15 @@ export default {
         border-radius: 3px;
         padding: 0 7px;
     }
-    input, select{
+    .add-form input, .add-form select{
         width: 70px;
+        border: 1px solid #dddddd;
     }
-}
+
+    .f-confirm {
+        color: #fff;
+        padding: 24px;
+        background: #4498ff;
+    }
 
 </style>
