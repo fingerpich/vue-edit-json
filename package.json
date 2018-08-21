@@ -5,6 +5,7 @@
   "author": "Fingerpich <zarei.bs@gmail.com>",
   "scripts": {
     "dev": "webpack-dev-server --watch --progress --config webpack.example.js --open --hot --host 127.0.0.1",
+    "buildDemo": "webpack --progress --config webpack.example.js --mode production",
     "example": "rm -rf ./example/dist/*.js && rm -rf ./example/dist/*.html && webpack --progress --config webpack.example.js",
     "build": "webpack --progress --config webpack.config.js",
     "lint": "eslint --ext .js,.vue src",
