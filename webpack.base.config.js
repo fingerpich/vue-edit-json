@@ -13,16 +13,6 @@ module.exports = {
           exclude: /node_modules/,
         },
         {
-            test: /\.less/,
-            use: [
-                'vue-style-loader',
-                'css-loader',
-                {
-                    loader: 'less-loader',
-                },
-            ],
-        },
-        {
           test: /\.css$/,
           loader: 'style-loader!css-loader',
         },
