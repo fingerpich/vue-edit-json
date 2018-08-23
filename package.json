@@ -1,6 +1,6 @@
 {
   "name": "vue-edit-json",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "View and edit JSON as an vue component",
   "author": "Fingerpich <zarei.bs@gmail.com>",
   "scripts": {
