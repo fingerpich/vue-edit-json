@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         jsonChangedData: function(data) {
-            console.log('jsonView has changed', data);
+            // console.log('jsonView has changed', data);
             this.$emit('input', this.makeJson(data))
         },
         jsonParse: function (jsonStr) {
@@ -41,14 +41,9 @@ export default {
                     let parsedVal = val
                     if(this.getType(val) === 'object') {
                         parsedVal = parseJson(val)
-                        // result.push(fr)
 
                     } else if(this.getType(val) === 'array') {
-
-                        // console.debug('-- a --')
-                        // console.debug(val)
                         parsedVal = parseArray(val)
-                        // result.push(fr)
                     }
 
                     let opt = {

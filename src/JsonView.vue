@@ -1,6 +1,6 @@
 <template>
     <div class="block_content">
-        <span v-for="(item, index) in parsedData" :key="index" class="block clearfix" v-show="!hideMyBlock[index]">
+        <span v-for="(item, index) in parsedData" :key="index" :class="['block', 'clearfix', {'hide-block': hideMyBlock[index] === true}]">
             <span class="json-key">
                 <editable-text :isEdit="isEdit" :value="item.name" @change="(nc)=> changeText(item, nc)"></editable-text>
                 <i class="collapse-down" v-if="item.type === Types.OBJECT || item.type === Types.ARRAY" @click="closeBlock(index, $event)">
