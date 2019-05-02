@@ -11,9 +11,6 @@ export default {
         return {
         }
     },
-    created() {
-      console.log(this.value);
-    },
     methods: {
         keydown: function (e) {
             if (e.keyCode === 13) {
@@ -23,7 +20,6 @@ export default {
         },
         editItem: function (ev) {
             if (this.isEdit) {
-                console.log(ev.target.textContent);
                 this.$emit('change', ev.target.textContent)
             }
         }

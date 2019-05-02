@@ -59,10 +59,6 @@ export default {
         }
     },
 
-    created: function () {
-        console.log('PARSED : ', this.parsedData);
-    },
-
     components: {
         ArrayView,
         EditValue,
@@ -119,8 +115,6 @@ export default {
                 e.target.focus()
                 // return 1
             }
-            console.debug(item);
-            console.debug(e)
         },
 
         onChange: function() {
